@@ -8,7 +8,7 @@ require_once 'inc/head.php'; ?>
 <div class="container starter-template">
 	<form action="control.php?action=create" method="post">
 		<h2>Cadastro de Livros</h2>
-		<div class="col-lg-4">
+		<div class="col-lg-5">
 			<label>Nome:</label>
 			<input name="name" autocomplete="off" required="required" autofocus="autofocus" maxlength="100" class="form-control">
 		</div>
@@ -17,22 +17,26 @@ require_once 'inc/head.php'; ?>
 			<input name="author" autocomplete="on" required="required" maxlength="60" class="form-control">
 		</div>
 		<div class="col-lg-3">
-			<label>Ano:</label>
-			<input name="year" autocomplete="on" data-mask="0000" required="required" type="number" min="1000" value="<?php echo date("Y"); ?>" max="<?php echo date("Y"); ?>" class="form-control">
+			<label>Editora:</label>
+			<input name="publisher" autocomplete="on" maxlength="60" class="form-control">
 		</div>
 		<div class="col-lg-1">
 			<label>Edição:</label>
 			<input name="edition" autocomplete="on" data-mask="0000" type="number" maxlength="4" min="1" max="9999" value="1" class="form-control">
 		</div>
-		<div class="col-lg-4">
+		<div class="col-lg-2">
+			<label>Ano:</label>
+			<input name="year" autocomplete="on" data-mask="0000" required="required" type="number" min="1000" value="<?php echo date("Y"); ?>" max="<?php echo date("Y"); ?>" class="form-control">
+		</div>
+		<div class="col-lg-5">
 			<label>Tema:</label>
 			<input name="about" autocomplete="on" maxlength="60" class="form-control">
 		</div>
-		<div class="col-lg-3">
-			<label>Editora:</label>
-			<input name="publisher" autocomplete="on" maxlength="60" class="form-control">
+		<div class="col-lg-1">
+			<label>Nº pags.:</label>
+			<input name="pages" autocomplete="off" data-mask="00000" type="number" maxlength="5" min="0" max="20000" value="250" class="form-control">
 		</div>
-		<div class="col-lg-3">
+		<div class="col-lg-4">
 			<label>Tipo do Livro:</label>
 			<select name="type" class="form-control">
 				<option value="0">Capa Comum</option>
@@ -47,10 +51,6 @@ require_once 'inc/head.php'; ?>
 				<option value="9">RTF</option>
 			</select>
 		</div>
-		<div class="col-lg-1">
-			<label>Nº pags.:</label>
-			<input name="pages" autocomplete="off" data-mask="00000" type="number" maxlength="5" min="0" max="20000" value="250" class="form-control">
-		</div>
 		<div class="col-lg-4">
 			<label>Cor:</label>
 			<input name="color" autocomplete="on" maxlength="40" class="form-control">
@@ -61,9 +61,9 @@ require_once 'inc/head.php'; ?>
 		</div>
 		<div class="col-lg-1">
 		<label>Nota:</label>
-			<input type="number" maxlength="2" data-mask="00"  name="grade" min="0" max="10" value="8" class="form-control">
+			<input type="number" maxlength="2" data-mask="00"  name="grade" min="0" max="10" value="0" class="form-control">
 		</div>
-		<div class="col-lg-2">
+		<div class="col-lg-3">
 			<label>Idioma:</label>
 			<select name="lang" class="form-control">
 				<option value="0">Português</option>
@@ -135,7 +135,7 @@ require_once 'inc/head.php'; ?>
 					
 				}
 		};	
-		ajax.open('GET', 'control.php?action=read&id='+book_id, false);
+		ajax.open('GET', 'control.php?action=read&id='+book_id, true);
 		ajax.send();
 		
 		document.forms[0].action = 'control.php?action=update&id='+book_id+'';

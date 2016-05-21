@@ -25,8 +25,8 @@ require_once './inc/head.php';
 					<th style="text-align:left">Nome</th>
 					<th style="text-align:left">Autor</th>
 					<th>Ano</th>
-					<th>Edição</th>
-					<th>Qtd Pags.</th>
+					<th>Ed.</th>
+					<th>Pags.</th>
 					<th>Nota:</th>
 					<th>Lido?</th>
 					<th>Controle</th>
