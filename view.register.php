@@ -115,7 +115,7 @@ require_once 'inc/head.php'; ?>
 		ajax.onreadystatechange = function() {
 			
 				if (ajax.readyState === 4 && ajax.status === 200) {
-					var book_data = JSON.parse(ajax.responseText);
+					var book_data = JSON.parse(ajax.responseText); 
 					var book = book_data[0];
 					
 					document.getElementsByName('name')[0].value	      = book.name;					
