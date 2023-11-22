@@ -1,23 +1,27 @@
 <?php 
-use mysqli;
 
-class CRUD {
-	
-	public $conn;
+class CRUD 
+{
+	protected $conn;
 
-	function __construct($server, $user, $password, $dbname, $port = 3306) 
+	public function __construct($server, $user, $password, $dbname, $port = 3306) 
 	{
-		$this->conn = new mysqli($server, $user, $password, $dbname, $port);
+		try {
+			
+			$this->conn = new mysqli($server, $user, $password, $dbname, $port);
+			// $this->conn = new PDO("mysql:dbname=$dbname;host=$server;charset=utf8mb4;port=$port", $user, $password);
 
-		if ($this->conn->connect_error) {
-			die('A conexão com o Banco de Dados falhou: ' . $this->conn->connect_error);
+			// $this->conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+			// $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			// $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 		}
-
-		$this->conn->query("SET CHARACTER SET utf8");
-		
+		catch(Exception $e) {
+			die('A conexão com o Banco de Dados falhou: ' . $e->getMessage());
+		}
 	}
 
-	function create(array $data) 
+	public function create(array $data) 
 	{
 		$sQuery = 'INSERT INTO tb_books (name, author, year, edition, about, pages, isbn, color, grade, lang, resume, was_read, publisher, type) 
 			VALUES (
@@ -40,7 +44,7 @@ class CRUD {
 		return $this->conn->query($sQuery);
 	}
 	
-	function read($book_id)
+	public function read($book_id)
 	{
 		$sQuery = 'SELECT * FROM tb_books';
 
@@ -58,12 +62,9 @@ class CRUD {
 		return $data;
 	}
 	
-	function update($data, $book_id) 
-	{	/*
-		$data['publisher']
-		$data['was_read'] 
-		$data['type']     
-		*/
+	public function update($data, $book_id) 
+	{	
+
 		$sQuery = 'UPDATE tb_books SET 
 			name	 = "'.$this->conn->real_escape_string($data['name']).'",
 			author	 = "'.$this->conn->real_escape_string($data['author']).'",
@@ -84,13 +85,13 @@ class CRUD {
 		return $this->conn->query($sQuery);
 	}
 
-	function delete($book_id) 
+	public function delete($book_id) 
 	{
 		$sQuery = 'DELETE FROM tb_books WHERE id = '.$book_id;
 		return $this->conn->query($sQuery);
 	}
 	
-	function set_read($book_id, $value) 
+	public function setRead($book_id, $value) 
 	{
 		$sQuery = 'UPDATE tb_books SET was_read = '.$value.' WHERE id = '.$book_id;
 		return $this->conn->query($sQuery);

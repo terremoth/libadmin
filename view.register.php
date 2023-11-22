@@ -1,8 +1,10 @@
-<?php 
+<?php
 require_once './control.php';
 require_once 'inc/head.php'; ?>
+
 </head>
 <body>
+
 <?php require_once 'inc/nav.php';?>
 
 <div class="container starter-template">
@@ -10,7 +12,7 @@ require_once 'inc/head.php'; ?>
 		<h2>Cadastro de Livros</h2>
 		<div class="col-lg-5">
 			<label>Nome:</label>
-			<input name="name" autocomplete="off" required="required" autofocus="autofocus" maxlength="100" class="form-control">
+			<input name="name" autocomplete="on" required="required" autofocus="autofocus" maxlength="100" class="form-control">
 		</div>
 		<div class="col-lg-3">
 			<label>Autor:</label>
@@ -80,7 +82,7 @@ require_once 'inc/head.php'; ?>
 		</div>
 		<div class="col-lg-1">
 			<label>Lido: <br>
-				<input class="form-control" type="checkbox" name="was_read" value="1">
+				<input class="form-control" type="checkbox" name="was_read">
 			</label> 
 		</div>
 		<div class="col-lg-12" style="margin-top: 30px">
@@ -88,39 +90,36 @@ require_once 'inc/head.php'; ?>
 			<textarea class="form-control" name="resume" maxlength="1200" rows="7" style="resize: none" placeholder="Once upon a time..."></textarea>
 		</div>
 		<div class="col-lg-12" style="margin-top: 30px">
-			<button type="submit" id="submit" class="btn btn-primary btn-flat">Cadastrar</button>
+			<button type="submit" id="submit" class="btn btn-success"><i class="fa fa-check"></i> Salvar</button>
 		</div>
 	</form>
 </div><!-- /.container -->
 
+<?php require_once 'inc/footer-scripts.php' ?>
 
-<script src="assets/js/jquery-latest.min.js"></script> 
-<script src="assets/js/bootstrap.min.js"></script> 
-<script src="assets/js/jquery.mask.min.js"></script> 
 <script>
 	function getUrlVars() {
-		var vars = {};
-		var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+		let vars = {};
+		let parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
 			vars[key] = value;
 		});
 		return vars;
 	}
 	
-	var book_id = getUrlVars().id;
+	let book_id = getUrlVars().id;
 	
-	if(book_id !== undefined){
+	if (book_id !== undefined){
 		
-		document.getElementById('submit').innerHTML = 'Atualizar';
-		var ajax = new XMLHttpRequest();
+		let ajax = new XMLHttpRequest();
 		ajax.onreadystatechange = function() {
 			
 				if (ajax.readyState === 4 && ajax.status === 200) {
-					var book_data = JSON.parse(ajax.responseText); 
-					var book = book_data[0];
-					
+					let book_data = JSON.parse(ajax.responseText); 
+					let book = book_data[0];
+					console.log(book);
 					document.getElementsByName('name')[0].value	      = book.name;					
 					document.getElementsByName('author')[1].value     = book.author;			
-					document.getElementsByName('year'[0]).value	      = book.year;					
+					document.getElementsByName('year')[0].value	      = book.year;					
 					document.getElementsByName('edition')[0].value    = book.edition;					
 					document.getElementsByName('about')[0].value	  = book.about;					
 					document.getElementsByName('pages')[0].value	  = book.pages;					
@@ -131,7 +130,7 @@ require_once 'inc/head.php'; ?>
 					document.getElementsByName('type')[0].value	      = book.type;					
 					document.getElementsByName('resume')[0].value	  = book.resume;					
 					document.getElementsByName('publisher')[0].value  = book.publisher;
-					document.getElementsByName('was_read')[0].checked = book.was_read;
+					document.getElementsByName('was_read')[0].checked = parseInt(book.was_read);
 					
 				}
 		};	
